@@ -1,0 +1,10 @@
+{
+  "expoServerNgrokUrl": "https://9u-7nx.kaylin.collegesystem.exp.direct",
+  "packagerNgrokUrl": "https://packager.9u-7nx.kaylin.collegesystem.exp.direct",
+  "ngrokPid": 19212,
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 22376,
+  "webpackServerPort": null
+}

@@ -1,0 +1,51 @@
+import { StyleSheet, StatusBar, TouchableOpacity, ScrollView, Text, View,AppRegistry,Image } from 'react-native';
+import {
+  COLOR_PINK, COLOR_PINK_LIGHT,
+  COLOR_FACEBOOK, COLOR_PINK_MEDIUM, COLOR_GREEN}
+from './myColors';
+import { Avatar } from 'react-native-elements';
+import React, { Component } from 'react';
+
+import Dashboard from 'react-native-dashboard';
+
+const items = [
+  { name: 'Profile', background: '#3498db', icon: 'user' },
+  { name: 'Attendance', background: '#ef0202', icon: 'calendar' },
+  { name: 'Assignment', background: '#efcf02', icon: 'briefcase' },
+  { name: 'Events', background: '#02ef1d', icon: 'users' },
+  { name: 'Notes', background: '#02cbef', icon: 'file' },
+  { name: 'Stats', background: '#ef5802', icon: 'gear' },
+];
+export default class StudentDashboard extends Component {
+  static navigationOptions = {
+    header: null,
+  }
+
+  _card = el => {
+    console.log('Card: ' + el.name)
+  };
+  render() {
+    return (
+      <View style={styles.container}>
+      <View style={styles.dashboard}>
+        <Dashboard items={items} background={true} card={this._card} column={2} />
+        </View>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    backgroundColor: COLOR_PINK_LIGHT
+  },
+  dashboard:{
+    flex:1,
+    marginTop: 70
+  }
+
+});
