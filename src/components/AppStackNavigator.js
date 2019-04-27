@@ -1,7 +1,11 @@
+    
 import Login from './Login'
 import Splash from './Splash'
 import Registration from './Registration'
 import StudentDashboard from './StudentDashboard'
+import TeacherDashboard from './TeacherDashboard'
+import Attendance from './Attendance'
+import Profile from './Profile'
 import {createStackNavigator, createAppContainer} from 'react-navigation'
 const AppNavigator = createStackNavigator({
     //Screens   
@@ -16,10 +20,19 @@ const AppNavigator = createStackNavigator({
     },
     StudentDashboard:{
         screen:StudentDashboard
+    },
+     TeacherDashboard:{
+        screen:TeacherDashboard
+    },
+    Attendance:{
+        screen:Attendance
+    },
+    Profile:{
+        screen:Profile
     }
 }, {
     //settings
-    initialRouteName: 'Splash'
+    initialRouteName: 'Profile'
 })
 // const defaultStackGetStateForAction =
 //   AppNavigator.router.getStateForAction;

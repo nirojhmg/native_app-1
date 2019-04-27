@@ -41,51 +41,54 @@ export default class Registration extends Component {
        if(selectedButton=='Student')
        {
         this.setState({is_student:true})
+        Alert.alert(JSON.stringify(is_student))
        }
-       else
+       else if (selectedButton=='Faculty')
        {
         this.setState({is_teacher:true})
+        Alert.alert(JSON.stringify(is_teacher))
        }
       
-        fetch('http://172.20.10.5:8000/rest-auth/registration/', {
-           method: 'POST',
-           headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json',
-           },
-           body: JSON.stringify({
-             email: this.state.email,
+        // fetch('http://100.121.101.233:8000/rest-auth/registration/', {
+        //    method: 'POST',
+        //    headers: {
+        //      'Accept': 'application/json',
+        //      'Content-Type': 'application/json',
+        //    },
+        //    body: JSON.stringify({
+        //      email: this.state.email,
               
-                 password1: this.state.password1,
-               password2: this.state.password2,
-                 username:this.state.username,
-                 is_student:this.state.is_student,
-               is_teacher:this.state.is_teacher
+        //          password1: this.state.password1,
+        //        password2: this.state.password2,
+        //          username:this.state.username,
+        //          is_student:this.state.is_student,
+        //        is_teacher:this.state.is_teacher
                
           
-           })
+        //    })
           
-         }).then((response) => response.json())
-               .then((responseJson) => {
+        //  }).then((response) => response.json())
+        //        .then((responseJson) => {
          
-                 // If server response message same as Data Matched
+        //          // If server response message same as Data Matched
                 
-                 if(responseJson.key !=null )
-                 {
+        //          if(responseJson.key !=null )
+        //          {
          
                      
-                  this.props.navigation.navigate("Login")
+        //           this.props.navigation.navigate("Login")
          
-                 }
-                 else
-                 {
-                  Alert.alert(JSON.stringify(responseJson));
-                 }
-                  //  Alert.alert(JSON.stringify(responseJson));
+        //          }
+        //          else
+        //          {
+        //           Alert.alert(JSON.stringify(responseJson));
+        //          }
+        //           //  Alert.alert(JSON.stringify(responseJson));
                 
-               }).catch((error) => {
-                 console.error(error);
-               });
+        //        }).catch((error) => {
+        //          console.error(error);
+        //        });
+      
           
            }
       
@@ -159,6 +162,8 @@ onPress = data => this.setState({ data });
             </View>
             <TouchableOpacity style={styles.RegisterButton} onPress={() => {
     this.UserRegistrationFunction(selectedButton);
+    
+    
   }} >
               <Text style={styles.loginButtonTitle} >Register</Text>
               

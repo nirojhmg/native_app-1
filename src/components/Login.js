@@ -25,15 +25,15 @@ export default class Login extends Component {
   static navigationOptions = {
     header: null,    
   }
-  componentDidMount() {
-  BackHandler.addEventListener('hardwareBackPress', function() {
-    // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
-    // Typically you would use the navigator here to go to the last state.
+//   componentDidMount() {
+//   BackHandler.addEventListener('hardwareBackPress', function() {
+//     // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
+//     // Typically you would use the navigator here to go to the last state.
   
     
-    return true;
-  })
-}
+//     return true;
+//   })
+// }
   state = {
     
     
@@ -47,7 +47,7 @@ export default class Login extends Component {
 
     
     
-     fetch('http://172.20.10.5:8000/rest-auth/login/', {
+     fetch('http://100.120.124.121:8000/rest-auth/login/', {
        method: 'POST',
        headers: {
          'Accept': 'application/json',
@@ -70,11 +70,19 @@ export default class Login extends Component {
                  {
          
                      if(responseJson.user_type.is_student==true){
-                      this.props.navigation.navigate("StudentDashboard",initialRouteName="StudentDashboard")
+                      this.props.navigation.navigate("StudentDashboard", {
+
+                        username: this.state.username,
+                      })
                      }
                 else if (responseJson.user_type.is_teacher==true)
                 {
-                  Alert.alert('Teacher Dashboard')
+                  this.props.navigation.navigate("TeacherDashboard",{
+
+                    username: this.state.username,
+                    email: this.state.email,
+                    password: this.state.password
+                  })
                 }
          else{
            Alert.alert('Must be Teacher or student')
@@ -109,7 +117,7 @@ export default class Login extends Component {
          style={{width: 130, height: 130,borderRadius: 130 / 2,    }}
           source={require('./images/collegelogo.png')}
         />
-            <Text style={styles.title}>
+          <Text style={styles.title}>
              Phonics Group Of Instution
           </Text>
           </View>
