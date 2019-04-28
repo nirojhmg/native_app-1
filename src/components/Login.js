@@ -47,7 +47,7 @@ export default class Login extends Component {
 
     
     
-     fetch('http://100.120.124.121:8000/rest-auth/login/', {
+     fetch('http://100.121.101.233:8000/rest-auth/login/', {
        method: 'POST',
        headers: {
          'Accept': 'application/json',

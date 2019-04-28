@@ -1,9 +1,10 @@
 {
-  "expoServerNgrokUrl": "https://yv-vay.anonymous.native-app-1.exp.direct",
-  "packagerNgrokUrl": "https://packager.yv-vay.anonymous.native-app-1.exp.direct",
-  "ngrokPid": 6064,
-  "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 15148
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "webpackServerPort": null,
+  "devToolsPort": 19002
 }
