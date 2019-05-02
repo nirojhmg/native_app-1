@@ -68,11 +68,12 @@ export default class Login extends Component {
              // If server response message same as Data Matched
              if(responseJson.key !=null  )
                  {
-         
+                 
                      if(responseJson.user_type.is_student==true){
                       this.props.navigation.navigate("StudentDashboard", {
-
+                         
                         username: this.state.username,
+                        key:responseJson.key,
                       })
                      }
                 else if (responseJson.user_type.is_teacher==true)

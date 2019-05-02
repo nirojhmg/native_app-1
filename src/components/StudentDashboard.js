@@ -22,14 +22,40 @@ export default class StudentDashboard extends Component {
     header: null,
     
   }
+  constructor(props) {
+    super(props);
+    this.state = { dataSource: [] }
+    
+   // this.state = {date:"2016-05-15"}
+  }
+  componentDidMount(){
+    console.log(this.props.navigation.state.params.username)
+    fetch("http://100.121.101.233:8000/users/users/"+this.props.navigation.state.params.username+"/")
+    .then(response => response.json())
+    .then((responseJson)=> {
+      this.setState({
+       
+       dataSource: responseJson
+      })
+      .catch(error=>console.log(error))
+    })
+  }
 _card = el => {
+ 
     console.log('Card: ' + el.name + this.props.navigation.state.params.username)
-    this.props.navigation.navigate(el.name)
+    this.props.navigation.navigate(el.name, {
+
+      user: this.state.dataSource.id,
+      key:this.props.navigation.state.params.key,
+      username:this.props.navigation.state.params.username
+    })
   };
   render() {
     const { navigation } = this.props;
     const username = navigation.getParam('username', 'NO-ID');
-    const email = navigation.getParam('email', 'NO-ID');
+    const key = navigation.getParam('key', 'NO-ID');
+console.log(this.props.navigation.state.params.username)
+console.log(this.state.dataSource)
 
 
     return (

@@ -32,7 +32,7 @@ const AppNavigator = createStackNavigator({
     }
 }, {
     //settings
-    initialRouteName: 'Profile'
+    initialRouteName: 'Login'
 })
 // const defaultStackGetStateForAction =
 //   AppNavigator.router.getStateForAction;
