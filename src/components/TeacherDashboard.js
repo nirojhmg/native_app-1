@@ -23,7 +23,12 @@ export default class TeacherDashboard extends Component {
   }
 _card = el => {
     console.log('Card: ' + el.name)
-    this.props.navigation.navigate(el.name)
+    this.props.navigation.navigate(el.name, {
+
+      user: this.state.dataSource.id,
+      key:this.props.navigation.state.params.key,
+      username:this.props.navigation.state.params.username
+    })
   };
   render() {
     const { navigation } = this.props;

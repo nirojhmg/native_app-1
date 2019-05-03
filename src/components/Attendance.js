@@ -34,11 +34,13 @@ export default class Attendance extends Component {
           language:'',
           PickerValueHolder : '',
           drop_down_data:[],
+          date:''
          };
          
        }
       
        SubmitFunction = () => {
+        
         fetch('http://100.121.101.233:8000/users/attendancerecord/', {
           method: 'POST',
     
@@ -46,15 +48,15 @@ export default class Attendance extends Component {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             // Authorization:  `7419b3f8649566eeee73097184dd4541920af853`,
-            Authorization: `Token 7419b3f8649566eeee73097184dd4541920af853`,
+            Authorization: `Token `+this.props.navigation.state.params.key,
     
           },
           body:
             JSON.stringify({
-              "subject": 2,
-    "subject_name": this.state.PickerValueHolder,
+              "subject_id":this.state.PickerValueHolder ,
+    "subject_name": this.state.Subject_name,
     "full_name": this.state.fullname,
-    "Date": "2019-04-30",
+    "Date": this.state.date,
     "present": "true"
             })
     
@@ -76,12 +78,17 @@ export default class Attendance extends Component {
        }
       
        componentDidMount(){
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
         fetch("http://100.121.101.233:8000/users/student/")
         .then(response => response.json())
         .then((responseJson)=> {
           this.setState({
            loading: false,
-           dataSource: responseJson
+           dataSource: responseJson,
+           date:
+        year+ '-' + month + '-' + date,
           })
           .catch(error=>console.log(error))
         })
@@ -100,6 +107,7 @@ export default class Attendance extends Component {
           console.error(error);
         });  
         
+      
         }
     
         showDialog(isShow){
@@ -220,7 +228,7 @@ export default class Attendance extends Component {
             selectedValue={this.state.PickerValueHolder}
             onValueChange={(itemValue, itemIndex) => this.setState({PickerValueHolder: itemValue})} >
             { this.state.drop_down_data.map((item, key)=>(
-            <Picker.Item label={item.subject_name} value={item.subject_name} key={key} />)
+            <Picker.Item label={item.subject_name} value={item.subject_id} key={key} />)
             )}
 
           </Picker>

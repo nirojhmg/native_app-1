@@ -24,9 +24,9 @@ export default class Profile extends Component {
   ProfileSubmitFunction = () => {
 
 
-    console.log('Pressed')
+    console.log(this.props.navigation.state.params.key)
   
-    fetch('http://100.121.101.233:8000/users/student/1/', {
+    fetch('http://100.121.101.233:8000/users/student/'+this.props.navigation.state.params.user+'/', {
       method: 'PUT',
 
       headers: {
@@ -38,7 +38,7 @@ export default class Profile extends Component {
       },
       body:
         JSON.stringify({
-          "user": 1,
+          "user": this.props.navigation.state.params.user,
           //"photo": "",
           "full_name":this.state.dataSource.full_name,
           "DOB": this.state.dataSource.DOB,
@@ -75,7 +75,7 @@ export default class Profile extends Component {
   }
  
   componentDidMount() {
-    return fetch('http://100.121.101.233:8000/users/student/1/')
+    return fetch('http://100.121.101.233:8000/users/student/'+this.props.navigation.state.params.user+'/')
       .then((response) => response.json())
       .then((responseJson) => {
 

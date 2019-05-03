@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, TouchableOpacity, ScrollView, Text, View,AppRegistry,Image } from 'react-native';
+import { StyleSheet, StatusBar, TouchableOpacity, ScrollView, Text, View,AppRegistry,Image,AsyncStorage } from 'react-native';
 import {
   COLOR_PINK, COLOR_PINK_LIGHT, 
   COLOR_FACEBOOK, COLOR_PINK_MEDIUM, COLOR_GREEN} 
@@ -8,6 +8,7 @@ import { Avatar }  from 'react-native-elements';
 import React, { Component } from 'react';
 
 import Dashboard from 'react-native-dashboard';
+
 import {DrawerNavigator} from 'react-navigation'
 const items = [
   { name: 'Profile', background: '#3498db', icon: 'user' },
@@ -24,10 +25,11 @@ export default class StudentDashboard extends Component {
   }
   constructor(props) {
     super(props);
-    this.state = { dataSource: [] }
+    this.state = { dataSource: [],hasToken: false }
     
    // this.state = {date:"2016-05-15"}
   }
+  
   componentDidMount(){
     console.log(this.props.navigation.state.params.username)
     fetch("http://100.121.101.233:8000/users/users/"+this.props.navigation.state.params.username+"/")
@@ -39,10 +41,13 @@ export default class StudentDashboard extends Component {
       })
       .catch(error=>console.log(error))
     })
+    AsyncStorage.getItem('id_token').then((is_student) => {
+      console.log("token:"+is_student)
+    })
   }
 _card = el => {
  
-    console.log('Card: ' + el.name + this.props.navigation.state.params.username)
+ 
     this.props.navigation.navigate(el.name, {
 
       user: this.state.dataSource.id,
@@ -54,11 +59,12 @@ _card = el => {
     const { navigation } = this.props;
     const username = navigation.getParam('username', 'NO-ID');
     const key = navigation.getParam('key', 'NO-ID');
-console.log(this.props.navigation.state.params.username)
+console.log(key)
 console.log(this.state.dataSource)
-
+console.log(this.state.hasToken)
 
     return (
+      
       <View style={styles.container}>
         <View style={styles.up}>
         <Avatar rounded

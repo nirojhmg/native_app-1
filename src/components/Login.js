@@ -10,7 +10,8 @@ import {
   Keyboard,
   Image,
   Button,
-  BackHandler
+  BackHandler,
+  AsyncStorage
   
   
 } from 'react-native'
@@ -19,7 +20,7 @@ import {
   COLOR_PINK, COLOR_PINK_LIGHT, 
   COLOR_FACEBOOK, COLOR_PINK_MEDIUM, COLOR_GREEN} 
 from './myColors';
-
+const STORAGE_KEY = 'ASYNC_STORAGE_NAME_EXAMPLE'
 export default class Login extends Component {
   
   static navigationOptions = {
@@ -42,6 +43,7 @@ export default class Login extends Component {
     username:''
     
   }
+  
   UserLoginFunction = () =>{
  
 
@@ -65,11 +67,13 @@ export default class Login extends Component {
      }).then((response) => response.json())
            .then((responseJson) => {
      
-             // If server response message same as Data Matched
+            console.log(responseJson)
+             // If server response message same as Data 
+             this.saveItem('id_token', this.state.username)
              if(responseJson.key !=null  )
                  {
                  
-                     if(responseJson.user_type.is_student==true){
+                       if(responseJson.user_type.is_student==true){
                       this.props.navigation.navigate("StudentDashboard", {
                          
                         username: this.state.username,
@@ -99,8 +103,17 @@ export default class Login extends Component {
            });
       
        }
-  
+       async saveItem(item, selectedValue) {
+        try {
+          await AsyncStorage.setItem(item, selectedValue);
+        } catch (error) {
+          console.error('AsyncStorage error: ' + error.message);
+        }
+      }
+       
   render() {
+    
+    console.log(this._retrieveData);
     const Divider = (props) => {
       return <View {...props}>
         <View style={styles.line}></View>
