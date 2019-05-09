@@ -1,4 +1,4 @@
-import { StyleSheet,FlatList,StatusBar, TouchableOpacity, ScrollView, Text, View,AppRegistry,Image,AsyncStorage,TouchableHighlight } from 'react-native';
+import { StyleSheet,Dimensions,FlatList,StatusBar, TouchableOpacity, ScrollView, Text, View,AppRegistry,Image,AsyncStorage,TouchableHighlight } from 'react-native';
 import {
   COLOR_PINK, COLOR_PINK_LIGHT, 
   COLOR_FACEBOOK, COLOR_PINK_MEDIUM, COLOR_GREEN} 
@@ -6,7 +6,9 @@ from './myColors';
 import { Avatar }  from 'react-native-elements';
 //import { Accordion, List } from 'antd-mobile';
 import React, { Component } from 'react';
+import { CardViewWithIcon } from "react-native-simple-card-view";
 import DialogInput from 'react-native-dialog-input';
+
 export default class StudentAttendance extends Component {
     static navigationOptions = {
         title: 'Attendance Record',
@@ -18,35 +20,56 @@ export default class StudentAttendance extends Component {
           loading: true,
           data:[],
           isDialogVisible: false,
+          github       : 0,
 
          };
          
        }
+      
        
        componentDidMount(){
 
-        AsyncStorage.getItem('username').then((username) => {
+        AsyncStorage.getItem('user').then((user) => {
               
             this.setState({
-            username:username 
+            user:user 
             
             })
-        }) 
+          
+       
+
+        
+        fetch('http://100.121.101.233:8000/users/student/'+this.state.user+'/')
+        .then((response) => response.json())
+        .then(data => {
+            
+      this.setState({ full_name:data.full_name })
+      console.log("FUllName:"+this.state.full_name)
+    })
+        .catch((error) => {
+          console.error(error);
+        });  
+       
         fetch('http://100.121.101.233:8000/users/attendancerecord/')
               .then((response) => response.json())
               .then(data => {
-                  console.log(data)
-            this.setState({ data: data.filter(d => d.full_name === this.state.username) })
+                 
+            this.setState({ data: data.filter(d => d.full_name === this.state.full_name) })
+            console.log("Data:"+this.state.data)
           })
+          console.log("Data:"+this.state.data) 
               .catch((error) => {
                 console.error(error);
               });  
               
              
-                      
+                 
 
-          
+            })    
+             
        }
+
+      
        FlatListItemSeparator = () => {
         return (
           <View
@@ -61,9 +84,56 @@ export default class StudentAttendance extends Component {
       
       
     render() {
+      const miniCardStyle = {shadowColor       : '#000000',shadowOffsetWidth : 2,shadowOffsetHeight: 2,shadowOpacity     : 0.1,hadowRadius      : 5,bgColor           : '#ffffff',padding           : 5,margin            : 5,borderRadius      : 3,elevation         : 3,width             : (Dimensions.get("window").width / 2) - 10
+    };
+    const uniqueTags = [];
+
+        
+this.state.data.map(img => {
+    if (uniqueTags.indexOf(img.subject_name) === -1) {
+        uniqueTags.push(img.subject_name)
+    }
+});
+
+
+   
+var elements=[];
+    for(var i=0;i<uniqueTags.length;i++){
+        var count = Object.keys(this.state.data.filter(d => d.subject_name === uniqueTags[i])).length;
+     elements.push({"name":uniqueTags[i],"count":count});
+     
+    }
+    console.log(elements)
     return(
         <View style={styles.MainContainer}>
-        <FlatList
+        <View style={styles.up}>
+        <View style={ {alignItems   : "center",flexDirection: "row",flexWrap     : 'wrap',} }>
+        { elements.map((item, key)=>(
+         
+         <CardViewWithIcon
+         key={key}
+            withBackground={ false }
+            // androidIcon={ 'logo-github' }
+            // iosIcon={ 'logo-github' }
+            iconHeight={ 30 }
+            iconColor={ '#333' }
+            title={ item.name  }
+            contentFontSize={ 20 }
+            titleFontSize={ 12 }
+            style={ miniCardStyle }
+            content={ item.count.toString() }
+            // onPress={ () => this.setState({
+            //          github       : this.state.github + 1
+            // }) }
+          />
+         )
+         )}    
+          
+  
+         
+        </View>
+        </View>
+        {/* <FlatList
          
          data={ this.state.data }
          
@@ -74,7 +144,8 @@ export default class StudentAttendance extends Component {
          > {item.subject_name}-{item.Date} </Text>}
         >
         
-        </FlatList>
+        </FlatList> */}
+
         
                     </View>
     );
@@ -82,15 +153,25 @@ export default class StudentAttendance extends Component {
 }
 const styles = StyleSheet.create({
     MainContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'stretch',
+      flex: 1,
+      flexDirection: 'column',
+      // justifyContent: 'center',
+       alignItems: 'stretch', 
         backgroundColor: COLOR_PINK_LIGHT
       },
       item: {
         padding: 10,
         fontSize: 18,
         height: 44,
+      },
+      title: {
+        fontSize: 38,
+        backgroundColor: 'transparent'
+      },
+      up: {
+        flex: 3,
+        flexDirection: 'column',
+        // justifyContent: 'center',
+        // alignItems: 'center'
       },
 });

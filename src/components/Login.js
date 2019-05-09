@@ -109,7 +109,7 @@ export default class Login extends Component {
        
   render() {
     
-    console.log(this._retrieveData);
+   
     const Divider = (props) => {
       return <View {...props}>
         <View style={styles.line}></View>

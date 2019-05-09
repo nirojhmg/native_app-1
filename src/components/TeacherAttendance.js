@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Image, View, StyleSheet, Text, TextInput, AppRegistry, FlatList,Alert,TouchableOpacity,Picker } from 'react-native';
+import { Button, Image, View, StyleSheet, Text, TextInput, AppRegistry, FlatList,Alert,TouchableOpacity,Picker,AsyncStorage } from 'react-native';
 import DialogInput from 'react-native-dialog-input';
 import {
     COLOR_PINK, COLOR_PINK_LIGHT,
@@ -46,19 +46,9 @@ export default class TeacherAttendance extends Component {
 
               
         
-        fetch('http://100.121.101.233:8000/users/subject/'+this.state.PickerValueHolder+'/').then((response) => response.json())
-          .then((responseJson) => {
-    
-            this.setState({
-                    subject_name:responseJson.subject_name.toString()
-                  
-                })
-              
-    
-          });
-          console.log("Subjectid:"+this.state.PickerValueHolder)
+          
 
-          console.log("SubjectName:"+this.state.subject_name)
+          
          fetch('http://100.121.101.233:8000/users/attendancerecord/', {
          method: 'POST',
     
@@ -66,13 +56,13 @@ export default class TeacherAttendance extends Component {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             // Authorization:  `7419b3f8649566eeee73097184dd4541920af853`,
-            Authorization: `Token `+this.props.navigation.state.params.key,
+            Authorization: `Token `+this.state.key,
     
           },
          body:
                 JSON.stringify({
                  
-        "subject_name": this.state.subject_name,
+        "subject_name": this.state.PickerValueHolder,
         "full_name": this.state.fullname,
         "Date": this.state.date,
         "present": "true"
@@ -96,13 +86,7 @@ export default class TeacherAttendance extends Component {
         var month = new Date().getMonth() + 1; //Current Month
         var year = new Date().getFullYear(); //Current Year
 
-        AsyncStorage.getItem('username').then((username) => {
-              
-          this.setState({
-          username:username 
-          
-          })
-      }) 
+      
       AsyncStorage.getItem('key').then((key) => {
               
         this.setState({
@@ -259,7 +243,7 @@ export default class TeacherAttendance extends Component {
             selectedValue={this.state.PickerValueHolder}
             onValueChange={(itemValue, itemIndex) => this.setState({PickerValueHolder: itemValue})} >
             { this.state.drop_down_data.map((item, key)=>(
-            <Picker.Item label={item.subject_name} value={item.subject_id} key={key} />)
+            <Picker.Item label={item.subject_name} value={item.subject_name} key={key} />)
             )}
 
           </Picker>

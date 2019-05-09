@@ -126,7 +126,7 @@ export default class TeacherProfile extends Component {
      fetch('http://100.121.101.233:8000/users/subject/')
     .then(response => response.json())
     .then(data => {
-      this.setState({ data: data.filter(d => d.faculty === 2) })
+      this.setState({ data: data.filter(d => d.faculty.toString() === this.state.user) })
     })
     .catch(error => {
       console.error(error);

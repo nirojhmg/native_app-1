@@ -9,6 +9,9 @@ import StudentProfile from './StudentProfile'
 import TeacherProfile from './TeacherProfile'
 import TeacherSubject from './TeacherSubject'
 import StudentAttendance from './StudentAttendance'
+import StudentVote from './StudentVote'
+import TeacherVote from './TeacherVote'
+import TeacherStats from './TeacherStats'
 import {createStackNavigator, createAppContainer} from 'react-navigation'
 const AppNavigator = createStackNavigator({
     //Screens   
@@ -41,6 +44,15 @@ const AppNavigator = createStackNavigator({
     },
     StudentAttendance:{
         screen:StudentAttendance
+    },
+    StudentVote:{
+        screen:StudentVote
+    },
+    TeacherVote:{
+        screen:TeacherVote
+    },
+    TeacherStats:{
+        screen:TeacherStats
     }
 }, {
     //settings

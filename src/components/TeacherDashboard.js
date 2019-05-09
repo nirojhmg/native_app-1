@@ -13,7 +13,7 @@ const items = [
   { name: 'Profile', background: '#3498db', icon: 'user' },
   { name: 'Attendance', background: '#3498db', icon: 'calendar' },
   { name: 'Subject', background: '#efcf02', icon: 'briefcase' },
-  { name: 'Events', background: '#efcf02', icon: 'users' },
+  { name: 'Vote', background: '#efcf02', icon: 'users' },
   { name: 'Notes', background: '#efcf02', icon: 'file' },
   { name: 'Stats', background: '#efcf02', icon: 'gear' },
 ];

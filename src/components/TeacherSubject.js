@@ -56,19 +56,12 @@ export default class TeacherSubject extends Component {
         // If server response message same as Data Matched
         {this.componentDidMount}
         {this.showDialog(false)}
+        {this.makeApiCall()}
 
       });
+     
       }
        componentDidMount(){
-        fetch('http://100.121.101.233:8000/users/subject/')
-              .then((response) => response.json())
-              .then(data => {
-                  console.log(data)
-            this.setState({ data: data.filter(d => d.faculty === 2) })
-          })
-              .catch((error) => {
-                console.error(error);
-              });  
               
               AsyncStorage.getItem('key').then((key) => {
   
@@ -86,9 +79,26 @@ export default class TeacherSubject extends Component {
                 user:user 
                 
                 })
+                this.makeApiCall()
             })          
-
+            
           
+       }
+       makeApiCall() {
+         console.log("API:"+this.state.user)
+        fetch('http://100.121.101.233:8000/users/subject/')
+              .then((response) => response.json())
+              .then(data => {
+               // this.state.data.filter(d => d.faculty_name === uniqueTags[i])
+                 
+            this.setState({ data: data.filter(d => d.faculty.toString() === this.state.user) })
+            console.log("data:"+this.state.data)
+          })
+              .catch((error) => {
+                console.error(error);
+              });  
+        
+
        }
        FlatListItemSeparator = () => {
         return (
@@ -113,7 +123,9 @@ export default class TeacherSubject extends Component {
                     title={"Add Subject"}
                     // message={""}
                     hintInput ={"Enter Subject Name"}
-                    submitInput={ (inputText) => {this.sendInput(inputText)} }
+                    submitInput={ (inputText) => {this.sendInput(inputText)}
+                    
+                  }
                     closeDialog={ () => {this.showDialog(false)}}>
         </DialogInput>
         <FlatList
